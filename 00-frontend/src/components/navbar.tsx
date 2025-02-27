@@ -1,25 +1,30 @@
 import * as React from 'react';
-import AppBar from '@mui/material/AppBar';
-import Box from '@mui/material/Box';
-import Toolbar from '@mui/material/Toolbar';
-import IconButton from '@mui/material/IconButton';
-import Typography from '@mui/material/Typography';
-import Menu from '@mui/material/Menu';
+//React-router
+import { Link } from 'react-router';
+//Material icons
+import {
+  AppBar, Box, Toolbar, IconButton, Typography, Menu,
+  Container, Avatar, Button, Tooltip, MenuItem
+} from '@mui/material';
+//Material icons
 import MenuIcon from '@mui/icons-material/Menu';
-import Container from '@mui/material/Container';
-import Avatar from '@mui/material/Avatar';
-import Button from '@mui/material/Button';
-import Tooltip from '@mui/material/Tooltip';
-import MenuItem from '@mui/material/MenuItem';
 import AdbIcon from '@mui/icons-material/Adb';
 
-const pages = ['Products', 'Pricing', 'Blog'];
+
+//Opciones de pagina
+const pages = ['', 'Categorias', 'Productos'];
+//Opciones de usuario
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 
+
+/* *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** ***  */
 const Navbar = () => {
+
+  /* *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** ***  */
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);
   const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null);
 
+  /* *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** ***  */
   const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElNav(event.currentTarget);
   };
@@ -35,11 +40,19 @@ const Navbar = () => {
     setAnchorElUser(null);
   };
 
+  /* *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** ***  */
   return (
     <AppBar position="static">
       <Container maxWidth="xl">
+
         <Toolbar disableGutters>
+
+          {/* *** *** *** *** Ventana Grande  *** *** *** *** */}
+
+          {/* *** *** Icono *** *** */}
           <AdbIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
+
+          {/* *** *** Titulo *** *** */}
           <Typography
             variant="h6"
             noWrap
@@ -55,10 +68,13 @@ const Navbar = () => {
               textDecoration: 'none',
             }}
           >
-            LOGO
+            Tienda de Ventas
           </Typography>
 
+          {/* *** *** Botonos ventana pequeña *** *** */}
           <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
+
+            {/* *** *** Icono de menu para ventana pequeña *** *** */}
             <IconButton
               size="large"
               aria-label="account of current user"
@@ -69,6 +85,8 @@ const Navbar = () => {
             >
               <MenuIcon />
             </IconButton>
+
+            {/* *** *** Menu de opcciones de ventana pequeña *** *** */}
             <Menu
               id="menu-appbar"
               anchorEl={anchorElNav}
@@ -86,13 +104,26 @@ const Navbar = () => {
               sx={{ display: { xs: 'block', md: 'none' } }}
             >
               {pages.map((page) => (
-                <MenuItem key={page} onClick={handleCloseNavMenu}>
-                  <Typography sx={{ textAlign: 'center' }}>{page}</Typography>
-                </MenuItem>
+                <Link to={`/${page}`}
+                  key={page}
+                  style={{ textDecoration: 'none', color: 'inherit' }} >
+                  <MenuItem onClick={handleCloseNavMenu}>
+                    <Typography sx={{ textAlign: 'center' }}>
+                      {page === "" ? "Inicio" : page}
+                    </Typography>
+                  </MenuItem>
+                </Link>
               ))}
             </Menu>
           </Box>
+
+
+          {/* *** *** *** *** Ventana pequeña  *** *** *** *** */}
+
+          {/* *** *** Icono ventana pequeña *** *** */}
           <AdbIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} />
+
+          {/* *** *** Titulo ventana pequeña *** *** */}
           <Typography
             variant="h5"
             noWrap
@@ -109,25 +140,35 @@ const Navbar = () => {
               textDecoration: 'none',
             }}
           >
-            LOGO
+            Ventas
           </Typography>
+
+          {/* *** *** *** *** Menu ventana grande *** *** *** *** */}
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
             {pages.map((page) => (
-              <Button
+              <Link to={`/${page}`}
                 key={page}
-                onClick={handleCloseNavMenu}
-                sx={{ my: 2, color: 'white', display: 'block' }}
-              >
-                {page}
-              </Button>
+                style={{ textDecoration: 'none', color: 'inherit' }}>
+                <Button
+                  onClick={handleCloseNavMenu}
+                  sx={{ my: 2, color: 'white', display: 'block' }}
+                >
+                  {page === "" ? "Inicio" : page}
+                </Button>
+              </Link>
             ))}
           </Box>
+
+          {/* *** *** boton de imagen de usuario ventana grande y pequeña *** *** */}
           <Box sx={{ flexGrow: 0 }}>
+
             <Tooltip title="Open settings">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
                 <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
               </IconButton>
             </Tooltip>
+
+            {/* *** *** Menu de usuario ventana grande y pequeña *** *** */}
             <Menu
               sx={{ mt: '45px' }}
               id="menu-appbar"
@@ -151,9 +192,11 @@ const Navbar = () => {
               ))}
             </Menu>
           </Box>
+
+
         </Toolbar>
       </Container>
-    </AppBar>
+    </AppBar >
   );
 }
 export default Navbar;
